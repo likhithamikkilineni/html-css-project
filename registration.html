@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Registration</title>
+    <link rel="stylesheet" href="style1.css">
+</head>
+<body>
+
+     <!-- 🔹 SUCCESS MESSAGE (ALREADY THERE – OK) -->
+     <div class="success-msg" id="successMsg">
+        ✅ Registration Done Successfully
+     </div>
+
+<div class="page">
+    <div class="form-container">
+        <h2>Student Registration</h2>
+
+        <!-- 🔹 onsubmit ADDED ONLY -->
+        <form onsubmit="showRegisterMsg(event)">
+            <label>Name <span>*</span></label>
+            <input type="text" placeholder="Enter your name" required>
+
+            <label>Age <span>*</span></label>
+            <input type="number" placeholder="Enter age" required>
+
+            <label>Gender <span>*</span></label>
+            <select required>
+                <option>Select Gender</option>
+                <option>Male</option>
+                <option>Female</option>
+                <option>Other</option>
+            </select>
+
+            <label>Email <span>*</span></label>
+            <input type="email" placeholder="Enter email" required>
+
+            <label>Phone Number <span>*</span></label>
+            <input type="tel" placeholder="Enter phone number" required minlength="10">
+
+            <label>Course <span>*</span></label>
+            <select required>
+                <option>Select Course</option>
+                <option>B.Tech - CSE</option>
+                <option>B.Tech - CSIT</option>
+                <option>B.Tech - ECE</option>
+                <option>B.Tech - AIDS</option>
+                <option>B.Tech - CSM</option>
+                <option>B.Tech - IT</option>               
+            </select>
+
+            <button type="submit">Register</button>
+        </form>
+    </div>
+</div>
+
+<!-- 🔹 ONLY THIS SCRIPT ADDED -->
+<script>
+function showRegisterMsg(event) {
+    registerSuccess(event);
+}
+
+function registerSuccess(event) {
+    event.preventDefault();
+
+    document.getElementById("successMsg").style.display = "block";
+
+    setTimeout(function () {
+        window.location.href = "homepage.html";
+    }, 1500);
+}
+</script>
+
+
+
+</body>
+</html>

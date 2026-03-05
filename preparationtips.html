@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Preparation Tips</title>
+
+    <style>
+        /* ===== SAME BACKGROUND STYLE ===== */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            min-height: 100vh;
+        }
+
+        .page {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 0;
+        }
+
+        .tips-container {
+            width: 90%;
+            max-width: 950px;
+            background: rgba(255,255,255,0.15);
+            border-radius: 18px;
+            padding: 30px;
+            color: #fff;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            text-align: center;
+            opacity: 0.9;
+            margin-bottom: 25px;
+        }
+
+        /* ===== TIPS CARDS ===== */
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .tip-card {
+            background: #ffffff;
+            color: #333;
+            border-radius: 16px;
+            padding: 20px;
+            border: 1.5px solid #dcecff;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .tip-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+
+        .tip-card h3 {
+            margin-top: 0;
+            color: #007acc;
+        }
+
+        .tip-content {
+            display: none;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-top: 10px;
+            color: #444;
+        }
+
+        /* ===== DAILY PROGRESS ===== */
+        .progress-box {
+            margin-top: 30px;
+            background: #ffffff;
+            color: #333;
+            padding: 20px;
+            border-radius: 16px;
+            border: 1.5px solid #dcecff;
+        }
+
+        .progress-box h3 {
+            color: #007acc;
+            margin-top: 0;
+            text-align: center;
+        }
+
+        .progress-box input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            margin-top: 8px;
+        }
+
+        .progress-bar-container {
+            background: #e0e0e0;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-top: 12px;
+        }
+
+        .progress-bar {
+            height: 18px;
+            width: 0%;
+            background: #4caf50;
+            transition: width 0.4s ease;
+        }
+
+        .progress-result {
+            margin-top: 12px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* ===== MOTIVATION ===== */
+        .quote {
+            margin-top: 25px;
+            padding: 15px;
+            text-align: center;
+            font-style: italic;
+            background: rgba(0,0,0,0.15);
+            border-radius: 12px;
+        }
+
+        /* ===== BUTTONS ===== */
+        .actions {
+            text-align: center;
+            margin-top: 25px;
+        }
+
+        .actions button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background: #ffffff;
+            color: #007acc;
+            font-weight: bold;
+            margin: 6px;
+        }
+
+        .actions button:hover {
+            background: #e6f3ff;
+        }
+
+        @media(max-width: 700px) {
+            .tips-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="page">
+    <div class="tips-container">
+        <h2>Preparation Tips</h2>
+        <p class="subtitle">Smart ways to improve academic performance</p>
+
+        <!-- ===== TIPS ===== -->
+        <div class="tips-grid">
+
+            <div class="tip-card" onclick="toggleTip(0)">
+                <h3>📘 Study Planning</h3>
+                <div class="tip-content">
+                    • Prepare a daily study timetable<br>
+                    • Study difficult subjects first<br>
+                    • Take short breaks to stay focused
+                </div>
+            </div>
+
+            <div class="tip-card" onclick="toggleTip(1)">
+                <h3>⏱ Time Management</h3>
+                <div class="tip-content">
+                    • Use Pomodoro technique<br>
+                    • Avoid distractions like mobile<br>
+                    • Set priorities for subjects
+                </div>
+            </div>
+
+            <div class="tip-card" onclick="toggleTip(2)">
+                <h3>🧠 Subject-wise Strategy</h3>
+                <div class="tip-content">
+                    • Programming: Practice daily<br>
+                    • Maths: Revise formulas & problems<br>
+                    • Theory: Prepare short notes
+                </div>
+            </div>
+
+            <div class="tip-card" onclick="toggleTip(3)">
+                <h3>📝 Exam Preparation</h3>
+                <div class="tip-content">
+                    • Solve previous question papers<br>
+                    • Take mock tests<br>
+                    • Identify weak areas early
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ===== DAILY PROGRESS ===== -->
+        <div class="progress-box">
+            <h3>📊 Daily Study Progress</h3>
+
+            <label>Study Hours Today</label>
+            <input type="number" id="hours" placeholder="Enter hours studied">
+
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+
+            <div class="progress-result" id="progressResult"></div>
+
+            <div class="actions">
+                <button onclick="trackProgress()">Update Progress</button>
+                <button onclick="clearProgress()">Clear</button>
+            </div>
+        </div>
+
+        <!-- ===== MOTIVATION ===== -->
+        <div class="quote" id="quoteBox">
+            “Consistency beats last-minute preparation.”
+        </div>
+
+        <div class="actions">
+            <button onclick="goHome()">⬅ Back to Home</button>
+            <button onclick="changeQuote()">New Motivation</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function toggleTip(index) {
+        const contents = document.querySelectorAll(".tip-content");
+        contents[index].style.display =
+            contents[index].style.display === "block" ? "none" : "block";
+    }
+
+    let streak = 0;
+
+    function trackProgress() {
+        const hours = Number(document.getElementById("hours").value);
+        const bar = document.getElementById("progressBar");
+        const result = document.getElementById("progressResult");
+
+        if (hours <= 0) {
+            result.innerHTML = "❌ Enter valid study hours";
+            bar.style.width = "0%";
+            return;
+        }
+
+        const percent = Math.min((hours / 8) * 100, 100);
+        bar.style.width = percent + "%";
+        streak++;
+
+        let msg = hours >= 6 ? "🔥 Excellent!" : hours >= 3 ? "👍 Good job!" : "⚠ Try more";
+
+        result.innerHTML = `
+            Studied: <b>${hours} hrs</b><br>
+            Progress: ${percent.toFixed(0)}%<br>
+            Streak: 🔥 ${streak} days<br>
+            ${msg}
+        `;
+    }
+
+    function clearProgress() {
+        document.getElementById("hours").value = "";
+        document.getElementById("progressBar").style.width = "0%";
+        document.getElementById("progressResult").innerHTML = "";
+        streak = 0;
+    }
+
+    const quotes = [
+        "Consistency beats last-minute preparation.",
+        "Small efforts every day lead to big success.",
+        "Don’t study hard, study smart.",
+        "Your future is created by what you do today."
+    ];
+
+    function changeQuote() {
+        const random = Math.floor(Math.random() * quotes.length);
+        document.getElementById("quoteBox").innerText = quotes[random];
+    }
+
+    function goHome() {
+        window.location.href = "homepage.html";
+    }
+</script>
+
+</body>
+</html>

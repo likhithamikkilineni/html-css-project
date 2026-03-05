@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>DSA Dashboard</title>
+<style>
+body{font-family:Arial;background:#f4f4f4;text-align:center}
+.box{background:white;padding:20px;margin:20px auto;width:70%;box-shadow:0 0 10px #ccc}
+input{padding:5px;margin:5px}
+button{padding:6px 12px;margin:5px;cursor:pointer}
+</style>
+</head>
+<body>
+
+<h2>Student DSA Operations Dashboard</h2>
+
+<!-- SEARCHING -->
+<div class="box">
+<h3>Searching</h3>
+<input id="searchArr" placeholder="1,2,3,4">
+<input id="searchKey" placeholder="Key">
+<button onclick="linearSearch()">Linear</button>
+<button onclick="binarySearch()">Binary</button>
+<p id="searchOut"></p>
+</div>
+
+<!-- SORTING -->
+<div class="box">
+<h3>Sorting</h3>
+<input id="sortArr" placeholder="5,3,1,2">
+<button onclick="bubbleSort()">Bubble</button>
+<button onclick="insertionSort()">Insertion</button>
+<button onclick="selectionSort()">Selection</button>
+<p id="sortOut"></p>
+</div>
+
+<!-- STACK -->
+<div class="box">
+<h3>Stack</h3>
+<input id="stackVal" placeholder="Value">
+<button onclick="pushStack()">Push</button>
+<button onclick="popStack()">Pop</button>
+<p id="stackOut"></p>
+</div>
+
+<!-- QUEUE -->
+<div class="box">
+<h3>Queue</h3>
+<input id="queueVal" placeholder="Value">
+<button onclick="enqueue()">Enqueue</button>
+<button onclick="dequeue()">Dequeue</button>
+<p id="queueOut"></p>
+</div>
+
+<script>
+
+// SEARCHING
+function linearSearch(){
+let arr=document.getElementById("searchArr").value.split(",").map(Number);
+let key=Number(document.getElementById("searchKey").value);
+for(let i=0;i<arr.length;i++){
+ if(arr[i]==key){
+  document.getElementById("searchOut").innerText="Found at index "+i;
+  return;
+ }
+}
+document.getElementById("searchOut").innerText="Not Found";
+}
+
+function binarySearch(){
+let arr=document.getElementById("searchArr").value.split(",").map(Number).sort((a,b)=>a-b);
+let key=Number(document.getElementById("searchKey").value);
+let l=0,h=arr.length-1;
+while(l<=h){
+ let m=Math.floor((l+h)/2);
+ if(arr[m]==key){
+  document.getElementById("searchOut").innerText="Found at index "+m;
+  return;
+ }
+ else if(arr[m]<key) l=m+1;
+ else h=m-1;
+}
+document.getElementById("searchOut").innerText="Not Found";
+}
+
+// SORTING
+function bubbleSort(){
+let arr=document.getElementById("sortArr").value.split(",").map(Number);
+for(let i=0;i<arr.length-1;i++)
+ for(let j=0;j<arr.length-i-1;j++)
+  if(arr[j]>arr[j+1])
+   [arr[j],arr[j+1]]=[arr[j+1],arr[j]];
+document.getElementById("sortOut").innerText=arr;
+}
+
+function insertionSort(){
+let arr=document.getElementById("sortArr").value.split(",").map(Number);
+for(let i=1;i<arr.length;i++){
+ let key=arr[i],j=i-1;
+ while(j>=0 && arr[j]>key){
+  arr[j+1]=arr[j]; j--;
+ }
+ arr[j+1]=key;
+}
+document.getElementById("sortOut").innerText=arr;
+}
+
+function selectionSort(){
+let arr=document.getElementById("sortArr").value.split(",").map(Number);
+for(let i=0;i<arr.length-1;i++){
+ let min=i;
+ for(let j=i+1;j<arr.length;j++)
+  if(arr[j]<arr[min]) min=j;
+ [arr[i],arr[min]]=[arr[min],arr[i]];
+}
+document.getElementById("sortOut").innerText=arr;
+}
+
+// STACK
+let stack=[];
+function pushStack(){
+let v=document.getElementById("stackVal").value;
+stack.push(v);
+document.getElementById("stackOut").innerText=stack;
+}
+function popStack(){
+stack.pop();
+document.getElementById("stackOut").innerText=stack;
+}
+
+// QUEUE
+let queue=[];
+function enqueue(){
+let v=document.getElementById("queueVal").value;
+queue.push(v);
+document.getElementById("queueOut").innerText=queue;
+}
+function dequeue(){
+queue.shift();
+document.getElementById("queueOut").innerText=queue;
+}
+
+</script>
+
+</body>
+</html>

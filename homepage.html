@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Home | Dashboard</title>
+    <link rel="stylesheet" href="style2.css">
+
+    <style>
+        .home-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .home-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 13px;
+            opacity: 0.85;
+        }
+
+/* 🔴 VERY SMALL LOGOUT BUTTON */
+.logout-btn {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    width: 55px;        /* 👈 button width small */
+    height: 20px;       /* 👈 button height small */
+    background: red;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 10px;
+    padding: 0;
+}
+
+.logout-btn:hover {
+    background: darkred;
+}
+</style>
+</head>
+
+<body>
+
+<div class="page">
+    <div class="home-container" style="position: relative;">
+
+        <!-- 🔴 SMALL LOGOUT -->
+       <button class="logout-btn" onclick="logout()">Logout</button>
+
+        <h2>Student Dashboard</h2>
+        <p class="subtitle">Academic Performance Overview</p>
+        <p class="subtitle">👋 Welcome back! Click any card to continue</p>
+
+        <div class="card-grid">
+
+            <div class="home-card" onclick="openSection('marks')">
+                <img src="https://cdn-icons-png.flaticon.com/512/3135/3135768.png">
+                <h3>Marks Calculation</h3>
+                <p>Calculate subject & total marks</p>
+            </div>
+
+            <div class="home-card" onclick="openSection('attendance')">
+                <img src="https://cdn-icons-png.flaticon.com/512/2921/2921222.png">
+                <h3>Attendance Check</h3>
+                <p>View attendance percentage</p>
+            </div>
+
+            <div class="home-card" onclick="openSection('graph')">
+                <img src="https://cdn-icons-png.flaticon.com/512/1828/1828884.png">
+                <h3>Performance Graph</h3>
+                <p>Visual performance analysis</p>
+            </div>
+
+            <div class="home-card" onclick="openSection('tips')">
+                <img src="https://cdn-icons-png.flaticon.com/512/3135/3135789.png">
+                <h3>Preparation Tips</h3>
+                <p>Study tips & guidance</p>
+            </div>
+
+        </div>
+
+        <div class="footer">
+            © Student Performance Dashboard | Academic Use Only
+        </div>
+
+    </div>
+</div>
+
+<script>
+function openSection(section) {
+    if (section === "marks") window.location.href = "markscalculation.html";
+    else if (section === "attendance") window.location.href = "attendancecheck.html";
+    else if (section === "tips") window.location.href = "preparationtips.html";
+    else if (section === "graph") window.location.href = "performance.html";
+}
+
+function logout() {
+    window.location.href = "login.html";
+}
+</script>
+
+</body>
+</html>

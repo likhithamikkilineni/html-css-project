@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Marks Calculation</title>
+    <link rel="stylesheet" href="style3.css">
+
+    <style>
+        .progress-container {
+            margin-top: 15px;
+            background: #ddd;
+            border-radius: 20px;
+            height: 18px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: #4CAF50;
+            color: white;
+            font-size: 12px;
+            text-align: center;
+            transition: width 0.5s;
+        }
+
+        .btn-row {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .back-btn {
+            background: #1e88e5;
+            color: #fff;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .back-btn:hover {
+            background: #1565c0;
+        }
+
+        .grade-sheet {
+            margin-top: 15px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="page">
+    <div class="form-container">
+        <h2>Marks Calculation</h2>
+
+        <form onsubmit="calculateMarks(event)">
+
+            <label>Java</label>
+            <input type="number" id="m1" placeholder="Marks obtained">
+            <input type="number" id="t1" placeholder="Out of">
+
+            <label>Python</label>
+            <input type="number" id="m2" placeholder="Marks obtained">
+            <input type="number" id="t2" placeholder="Out of">
+
+            <label>C Programming</label>
+            <input type="number" id="m3" placeholder="Marks obtained">
+            <input type="number" id="t3" placeholder="Out of">
+
+            <label>HTML / CSS</label>
+            <input type="number" id="m4" placeholder="Marks obtained">
+            <input type="number" id="t4" placeholder="Out of">
+
+            <label>English</label>
+            <input type="number" id="m5" placeholder="Marks obtained">
+            <input type="number" id="t5" placeholder="Out of">
+
+            <label>Mathematics</label>
+            <input type="number" id="m6" placeholder="Marks obtained">
+            <input type="number" id="t6" placeholder="Out of">
+
+            <label>Physics</label>
+            <input type="number" id="m7" placeholder="Marks obtained">
+            <input type="number" id="t7" placeholder="Out of">
+
+            <label>Optional Subject</label>
+            <input type="number" id="m8" placeholder="Marks obtained">
+            <input type="number" id="t8" placeholder="Out of">
+
+            <button type="submit">Calculate</button>
+        </form>
+
+        <!-- RESULT -->
+        <div class="result-box" id="resultBox"></div>
+        <div class="result-box" id="subjectResult"></div>
+
+        <!-- PROGRESS BAR -->
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar">0%</div>
+        </div>
+
+        <!-- BUTTONS -->
+        <div class="btn-row">
+            <button class="back-btn" onclick="goHome()">⬅ Home</button>
+            <button class="back-btn" onclick="clearAll()">🧹 Clear</button>
+        </div>
+
+        <!-- GRADE SHEET -->
+        <div class="grade-sheet">
+            <b>Grade Sheet</b><br>
+            A : 75% & above<br>
+            B : 60 – 74%<br>
+            C : 50 – 59%<br>
+            Fail : Below 50%
+        </div>
+    </div>
+</div>
+
+<script>
+function calculateMarks(event) {
+    event.preventDefault();
+
+    let subjects = [
+        { name: "Java", m: "m1", t: "t1" },
+        { name: "Python", m: "m2", t: "t2" },
+        { name: "C", m: "m3", t: "t3" },
+        { name: "HTML/CSS", m: "m4", t: "t4" },
+        { name: "English", m: "m5", t: "t5" },
+        { name: "Maths", m: "m6", t: "t6" },
+        { name: "Physics", m: "m7", t: "t7" },
+        { name: "Optional", m: "m8", t: "t8" }
+    ];
+
+    let totalObtained = 0;
+    let totalMarks = 0;
+    let subjectHTML = "";
+
+    let highest = -1, lowest = 101;
+    let highSub = "", lowSub = "";
+
+    for (let s of subjects) {
+        let m = document.getElementById(s.m).value;
+        let t = document.getElementById(s.t).value;
+
+        if (m !== "" && t !== "") {
+            m = Number(m);
+            t = Number(t);
+
+            if (m > t || m < 0 || t <= 0) {
+                alert("Invalid marks in " + s.name);
+                return;
+            }
+
+            let percent = (m / t) * 100;
+
+            let grade =
+                percent >= 75 ? "A" :
+                percent >= 60 ? "B" :
+                percent >= 50 ? "C" : "Fail";
+
+            subjectHTML += `${s.name}: ${m}/${t} → Grade: ${grade}<br>`;
+
+            if (percent > highest) {
+                highest = percent;
+                highSub = s.name;
+            }
+
+            if (percent < lowest) {
+                lowest = percent;
+                lowSub = s.name;
+            }
+
+            totalObtained += m;
+            totalMarks += t;
+        }
+    }
+
+    if (totalMarks === 0) {
+        alert("Enter at least one subject marks");
+        return;
+    }
+
+    let percentage = (totalObtained / totalMarks) * 100;
+    let status = percentage >= 40 ? "PASS" : "FAIL";
+    let overallGrade =
+        percentage >= 75 ? "A" :
+        percentage >= 60 ? "B" :
+        percentage >= 50 ? "C" : "Fail";
+
+    document.getElementById("resultBox").innerHTML =
+        `Total: ${totalObtained}/${totalMarks}<br>
+         Percentage: ${percentage.toFixed(2)}%<br>
+         Grade: ${overallGrade}<br>
+         Status: ${status}<br>
+         Highest: ${highSub}<br>
+         Lowest: ${lowSub}`;
+
+    document.getElementById("subjectResult").innerHTML = subjectHTML;
+
+    let bar = document.getElementById("progressBar");
+    bar.style.width = percentage + "%";
+    bar.innerHTML = percentage.toFixed(1) + "%";
+}
+
+function clearAll() {
+    document.querySelectorAll("input").forEach(i => i.value = "");
+    document.getElementById("resultBox").innerHTML = "";
+    document.getElementById("subjectResult").innerHTML = "";
+    document.getElementById("progressBar").style.width = "0%";
+    document.getElementById("progressBar").innerHTML = "0%";
+}
+
+function goHome() {
+    window.location.href = "homepage.html";
+}
+</script>
+
+</body>
+</html>

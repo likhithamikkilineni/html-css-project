@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Attendance Check</title>
+    <link rel="stylesheet" href="style3.css"> <!-- SAME BACKGROUND -->
+
+    <style>
+        /* extra only – background untouched */
+        .progress {
+            width: 100%;
+            height: 18px;
+            background: #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: green;
+            transition: 0.5s;
+        }
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="page">
+    <div class="form-container">
+        <h2>Attendance Check</h2>
+
+        <form onsubmit="calculateAttendance(event)">
+
+            <label>Total Classes</label>
+            <input type="number" id="total" placeholder="Enter total classes" required>
+
+            <label>Classes Attended</label>
+            <input type="number" id="attended" placeholder="Enter attended classes" required>
+
+            <label>Classes Absent</label>
+            <input type="number" id="absent" placeholder="Auto calculated" readonly>
+
+            <div class="btn-group">
+                <button type="submit">Calculate Attendance</button>
+                <button type="button" onclick="clearAll()">Clear</button>
+            </div>
+        </form>
+
+        <div class="result-box" id="resultBox"></div>
+
+        <!-- Progress Bar -->
+        <div class="progress">
+            <div class="progress-bar" id="bar"></div>
+        </div>
+
+        <button class="back-btn" onclick="goHome()">⬅ Back to Home</button>
+    </div>
+</div>
+
+<script>
+function calculateAttendance(event) {
+    event.preventDefault();
+
+    let total = Number(document.getElementById("total").value);
+    let attended = Number(document.getElementById("attended").value);
+
+    if (attended > total) {
+        alert("Attended classes cannot be greater than total classes");
+        return;
+    }
+
+    // auto absent
+    let absent = total - attended;
+    document.getElementById("absent").value = absent;
+
+    let percentage = (attended / total) * 100;
+
+    // minimum classes needed for 75%
+    let needed = 0;
+    if (percentage < 75) {
+        needed = Math.ceil((0.75 * total - attended) / 0.25);
+    }
+
+    let status = percentage >= 75
+        ? "✅ Eligible"
+        : `❌ Not Eligible<br>Need <b>${needed}</b> more classes for 75%`;
+
+    document.getElementById("resultBox").innerHTML =
+        `Attendance: <b>${percentage.toFixed(2)}%</b><br>
+         Absents: ${absent}<br>
+         Status: ${status}`;
+
+    // progress bar
+    let bar = document.getElementById("bar");
+    bar.style.width = percentage + "%";
+    bar.style.background = percentage >= 75 ? "green" : "red";
+}
+
+function clearAll() {
+    document.getElementById("total").value = "";
+    document.getElementById("attended").value = "";
+    document.getElementById("absent").value = "";
+    document.getElementById("resultBox").innerHTML = "";
+    document.getElementById("bar").style.width = "0%";
+}
+
+function goHome() {
+    window.location.href = "homepage.html";
+}
+</script>
+
+</body>
+</html>
